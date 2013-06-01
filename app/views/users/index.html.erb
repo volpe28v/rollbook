@@ -1,22 +1,23 @@
 <div id="index" class="wrapper">
-<div class="contents clearfix">
+  <div class="contents clearfix">
 
-<div class="main">
-  <h2 class="hl-line">登録ユーザ一覧 (<%= @users.count %>人)</h2>
-  <div class="user_list">
-    <table>
-      <tr><th>名前</th><th>管理数</th><th>参加数</th><th>キャンセル</th><th>メールアドレス</th><tr>
-      <% @users.each do |u| %>
-        <tr>
-          <td><%= link_to u.name, u %></td>
-          <td><%= u.admin_events.count %></td>
-          <td><%= u.roll_books.entry.count %></td>
-          <td><%= u.roll_books.cancel.count %></td>
-          <td><%= mail_to u.email %></td>
-        </tr>
-      <% end %>
-    </table>
+    <div class="main">
+      <h2 class="hl-line">登録ユーザ一覧 (<%= @users.count %>人)</h2>
+      <div class="user_list">
+        <table>
+          <tr><th>名前</th><th>管理数</th><th>参加数</th><th>キャンセル</th><tr>
+              <% @users.each do |u| %>
+                <tr>
+                  <td><%= link_to u.name, u %></td>
+                  <td><%= u.admin_events.count %></td>
+                  <td><%= u.roll_books.entry.count %></td>
+                  <td><%= u.roll_books.cancel.count %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-</div>
 </div>
