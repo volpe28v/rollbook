@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.name = params[:user][:name]
     @user.email = params[:user][:email]
-    
+
     if params[:user][:password] != ""
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
