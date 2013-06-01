@@ -9,6 +9,7 @@ class CommentsController < ApplicationController
 
     comment.save
 
+    #TODO:イベント管理者へのメール送信を実装する
 #    CommentMailer.sendmail(event.admin_event.user).deliver
 
     redirect_to event
