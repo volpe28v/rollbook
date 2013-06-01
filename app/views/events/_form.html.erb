@@ -1,0 +1,71 @@
+<%= form_for(@event) do |f| %>
+
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<section>
+  <h2 class="section-title">1. イベントの内容を設定してください。</h2>
+
+  <div class="form-2col clearfix">
+  <dl class="left">
+    <dt class="label"><strong>タイトル</strong> <span class="red">※必須</span></dt>
+    <dd><%= f.text_field :title ,:size => 30, :class => "input-text required" %></dd>
+  </dl>
+
+  <dl class="right">
+    <dt class="label"><strong>サブタイトル</strong> <em>イベントのサブタイトルがあれば記入してください。</em></dt>
+    <dd><%= f.text_field :summary ,:size => 30, :class => "input-text" %></dd>
+  </dl>
+  </div>
+
+  <dl>
+    <dt class="label"><strong>内容</strong> <span class="red">※必須。htmlタグも多少使えます。URLは自動リンクします。</span></dt>
+    <dd class="clearfix event-description">
+      <div class="main"><%= f.text_area :content , :class => "input-text required", :cols => 40, :rows => 20 %></div>
+      <div class="redcloth_output_corner">
+      </div>
+    </dd>
+  </dl>
+</section>
+
+<section>
+  <h2 class="section-title">2. イベントの情報を設定してください。</h2>
+  
+  <dl>
+    <dt class="label"><strong>日時</strong> <span class="red">※開始のみ必須。</span><em>書式は YYYY-MM-DD-hh:mm でお願いします。</em></dt>
+    <dd class="form-date">
+      <ul class="clearfix">
+        <li><%= f.text_field :start , :class => "datepicker input-text required date", :size => 30, :placeholder => "YYYY-MM-DD-hh:mm"%></li>
+        <li class="sep">_</li>
+        <li><%= f.text_field :end , :class => "datepicker input-text required date", :size => 30, :placeholder => "YYYY-MM-DD-hh:mm"%></li>
+      </ul>
+    </dd>
+  </dl>
+
+  <dl>
+    <dt class="label"><strong>定員</strong> <em><span class="red">※必須。</span> 定員を半角で入力してください。定員を超えて参加された方は補欠者となり、キャンセルがあれば繰り上がります。</em></dt>
+    <dd class="form-number"><%= f.text_field :capacity, :class=>"input-text numonly",:size=>30 %></dd>
+  </dl>
+
+  <div class="form-2col clearfix">
+  <dl class="left">
+    <dt class="label"><strong>場所</strong> <em><span class="red">※必須。</span> 拠点名、会議室を明確に記述願います。</em></dt>
+    <dd><%= f.text_field :place ,:class => "input-text", :size => 30%></dd>
+  </dl>
+  </div>
+
+</section>
+
+  <div class="form-btn">
+    <%= f.submit "登録", :class => "btn input-btn radius-8" %>
+  </div>
+<% end %>

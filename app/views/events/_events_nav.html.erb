@@ -1,0 +1,79 @@
+<aside class="side" id="events_nav">
+<div id="events-status">
+  <% unless @event.is_done? %>
+    <% if @current_user_status == "entry" %>
+      <h2 id="events-action-joined" class="radius-8 action">このイベントに参加しています</h2>
+    <% elsif @current_user_status == "nologin" %>
+      <h2><%= link_to "ログインしてください", new_user_session_path, :class => "radius-8 action", :id => "events-action-login" %></h2>
+    <% elsif @current_user_status == "cancel" %>
+      <h2><%= link_to 'このイベントに再参加登録する', edit_roll_book_path(@current_roll_book), :class => "radius-8 action", :id => "events-action-join" %></h2>
+    <% else %>
+      <h2><%= link_to 'このイベントに参加登録する', new_event_roll_book_path(@event), :class => "radius-8 action", :id => "events-action-join" %></h2>
+    <% end %>
+  <% else %>
+    <h2 id="events-action-end" class="radius-8 action">このイベントは終了しました</h2>
+  <% end %>
+</div>
+
+  <section class="events-nav"> 
+    <h3>イベント管理</h3> 
+    <ul class="ln"> 
+    <% if @event.admin_event.user == current_user %>
+      <li><span class="symbol red">&#9816;</span><%= link_to 'このイベントを編集する', edit_event_path(@event) %></li>
+      <li><span class="symbol red">&#9760;</span><%= link_to 'このイベントを削除する', @event, :method => :delete, :confirm => "本当に削除しますか？ 参加者のコメントも削除されます。" %></li>
+      <li><span class="symbol red">&#9993;</span><%= mail_to @event.roll_books.entry_emails,'参加者にメールでお知らせする', :subject => "【RollBook】「#{@event.title}」についてのお知らせ", :body => "To: 「#{@event.title}」にご参加の皆様\n\n\n\n「#{@event.title}」\n  #{event_url(@event)}\n", :encode => "hex" %></li>
+    <% end %>
+<% if !@event.is_done? and (@current_user_status == "entry" or @event.admin_event.user == current_user) %>
+
+    <% if @current_user_status == "entry" %>
+      <li><span class="symbol red">&#9992;</span><%= link_to "イベントへの参加をキャンセル", cancel_roll_book_path(@current_roll_book) %></li> 
+    <% end %>
+
+      <li><span class="symbol red">&#9993;</span><%= mail_to @event.admin_event.user.email,'管理者にメールで問い合わせる', :subject => "【RollBook】「#{@event.title}」についての問い合わせ", :body => "To: #{@event.admin_event.user.name} 様\n\n\n\n「#{@event.title}」\n  #{event_url(@event)}\n", :encode => "hex" %></li>
+<% else %>
+    <% if @event.admin_event.user != current_user %>
+      <li><span class="symbol red">&#9993;</span><%= mail_to @event.admin_event.user.email,'管理者にメールで問い合わせる', :subject => "【RollBook】「#{@event.title}」についての問い合わせ", :body => "To: #{@event.admin_event.user.name} 様\n\n\n\n「#{@event.title}」\n  #{event_url(@event)}\n", :encode => "hex" %></li>
+    <% end %>
+
+<% end %>
+    </ul> 
+  </section> 
+
+<section id="events-members">
+  <!-- #members-info -->
+  <div id="members-info">
+    <h3>参加希望者<strong class="red"><%= @event.roll_books.entry.count %></strong> / <span><%= @event.capacity %></span> 人<br/></h3>
+    <nav><ul class="clearfix">
+      <li><a href="#members-join">参加：<strong><%= @event.valid_entry_count %></strong></a></li>
+      <li><% if @event.sub_count > 0 %> / <a href="#members-sub">補欠：<strong><%= @event.sub_count %></strong></a><% end %></li>
+      <li><% if @event.roll_books.cancel.count > 0 %> / <a href="#members-cancel">キャンセル：<strong><%= @event.roll_books.cancel.count %></strong></a><% end %></li>
+    </ul></nav>
+  </div>
+
+  <section name="members-join" id="members-join">
+  <h4><span class="symbol red">▼</span>参加者 ( <%= @event.valid_entry_count %> 人)</h4>
+  <ol class="a-b">
+    <%= render :partial => 'events/comment', :object => @event.roll_books.entry[0...@event.capacity] %>
+  </ol>
+  </section>
+
+  <% if @event.sub_count > 0 %>
+    <section name="members-sub" id="members-sub"> 
+    <h4><span class="symbol red">▼</span>補欠者 ( <%= @event.sub_count %> 人)</h4>
+    <ol class="a-b">
+      <%= render :partial => 'events/comment', :object => @event.roll_books.entry[@event.capacity..-1] %>
+    </ol>
+    </section>
+  <% end %>
+    
+  <% if @event.roll_books.cancel.count > 0 %>
+    <section name="members-cancel" id="members-cancel"> 
+    <h4><span class="symbol red">▼</span>キャンセルした人のコメント</h4>
+    <ol>
+      <%= render :partial => 'events/comment', :object => @event.roll_books.cancel %>
+    </ol>
+    </section>
+  <% end %>
+
+</section>
+</aside>

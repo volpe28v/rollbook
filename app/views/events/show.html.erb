@@ -1,0 +1,62 @@
+<div id="events" class="wrapper">
+<hgroup class="title clearfix">
+  <h1><%= @event.title %></h1>
+  <h2><%= @event.summary %></h2>
+</hgroup>
+
+<div class="title-btn">
+  <ul>
+    <li><%= link_to 'イベント一覧へ戻る', events_path %>
+  </ul>
+</div>
+
+<div id="events-show" class="contents clearfix">
+
+<div class="main">
+
+<!-- events-show-info -->
+<div class="events-show-info dl-items a-b">
+  <dl class="clearfix">
+    <dt>日時 :</dt>
+    <dd><%= @event.start.strftime("%Y年%m月%d日 %H:%M") %> <%= @event.end ? "〜 " + @event.end.strftime("%Y年%m月%d日 %H:%M") : "" %></dd>
+  </dl>
+
+  <dl class="clearfix">
+    <dt>定員 :</dt>
+    <dd><%= @event.capacity %> 人</dd>
+  </dl>
+
+  <dl class="clearfix">
+    <dt>会場 :</dt>
+      <dd class="location"><%= @event.place %></dd>
+  </dl>
+
+  <dl class="clearfix">
+    <dt>管理者 :</dt>
+    <dd><%= link_to @event.admin_event.user.name, @event.admin_event.user %></dd>
+  </dl>
+
+  <% if @event.comments.count > 0 %>
+  <dl class="clearfix">
+    <dt>コメント :</dt>
+    <dd><%= link_to raw(%q|<font color="red">|) + @event.comments.count.to_s + raw(%q|件</font>|), '#comment' %> (<%= link_to @event.comments.last.user.name, @event.comments.last.user %>)</dd>
+  </dl>
+  <% end %>
+
+</div>
+<!-- //.events-show-info  -->
+
+<div id="post-body" class="mg-b20">
+  <%= auto_link( simple_format(@event.content).gsub("　"," 　 ") ) %>
+</div>
+
+<!-- comment -->
+<span id="comment"></span>
+<%= render 'comment_form' %>
+
+</div>
+
+<%= render 'events_nav' %>
+
+</div>
+</div>

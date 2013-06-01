@@ -1,0 +1,26 @@
+<!-- #entry -->
+<div id="entry" class="wrapper">
+
+<!-- .title -->
+<hgroup class="title clearfix">
+  <%= content_tag 'h1', link_to( @event.title, @event ) %>
+  <%= content_tag 'h2', @event.summary %>
+</hgroup>
+<!-- //.title -->
+
+<!-- .contetns -->
+<div id="entry-new" class="contents contents-hl clearfix">
+  <div class="main">
+    <%= content_tag 'h3', "このイベントに参加する",:class => "hl-line mg-b30" %>
+    <strong class="red">イベント登録はまだ完了していません！</strong>
+      
+    <p>コメントを記入して参加登録を済ませましょう！</p>
+    <ul>
+      <li>参加コメントは全ての人が見ることができます。</li>
+    </ul>
+    <%= render 'form' %>
+  </div>
+  <%= render 'events/events_nav' %>
+</div>
+
+<%= link_to 'Back', events_path %>

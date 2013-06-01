@@ -1,0 +1,54 @@
+# Typus Models Configuration File
+#
+# Use the README file as a reference to customize settings.
+
+AdminEvent:
+  fields:
+    default: event_id, user_id, user, event
+    form: event_id, user_id, user, event
+  order_by: 
+  relationships: event, user
+  filters: 
+  search: 
+  application: rollbook
+
+Comment:
+  fields:
+    default: event_id, user_id, user, event
+    form: body, event_id, user_id, user, event
+  order_by: 
+  relationships: event, user
+  filters: 
+  search: 
+  application: rollbook
+
+Event:
+  fields:
+    default: title, start, end, capacity, place, user_id, summary
+    form: title, content, start, end, capacity, place, user_id, summary
+  order_by: 
+  relationships: admin_event, comments, roll_books, users
+  filters: 
+  search: title
+  application: rollbook
+
+RollBook:
+  fields:
+    default: user_id, event_id, status, user, event
+    form: user_id, event_id, comment, status, user, event
+  order_by: 
+  relationships: event, user
+  filters: 
+  search: 
+  application: rollbook
+
+User:
+  fields:
+    default: email, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, name
+    form: email, reset_password_token, reset_password_sent_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, name
+  order_by: 
+  relationships: admin_events, comments, events, roll_books
+  filters: 
+  search: name
+  application: rollbook
+

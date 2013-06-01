@@ -1,0 +1,34 @@
+<h2>個人情報変更</h2>
+
+<center>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %></h2>
+    <ul>                                        
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>                                            
+      <% end %>
+    </ul>                                       
+  </div>                                                               
+<% end %>            
+</center>
+
+<% form_for @user do |f| %>
+  <p><%= f.label "氏名" %><br>
+  <%= f.text_field :name %></p>
+
+  <p><%= f.label "メールアドレス" %><br>
+  <%= f.text_field :email %></p>
+
+  <br>
+  <p><%= f.label "新しいパスワードを入力(変更したい場合)" %><br>
+  <%= f.password_field :password %></p>
+
+  <p><%= f.label "確認用パスワードを入力" %><br>
+  <%= f.password_field :password_confirmation %></p>
+  <%= f.submit %>
+<% end %>
+
+
+
+

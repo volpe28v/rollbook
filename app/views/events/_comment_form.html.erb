@@ -1,0 +1,36 @@
+<div id="comments-content">
+    <%= raw("<strong>コメント</strong>") %> 
+    <% if current_user %>
+      (コメントは全員が閲覧できます。)
+    <% else %>
+      (コメントはログインユーザが投稿できます。)
+    <% end %>
+
+  <% @event.comments.each do |c| %>
+    <div class="comments-entry clearfix">
+      <dl>
+        <dt>
+          <strong><%= link_to c.user.name , c.user %></strong> - <span class="comments-date">(<%= c.updated_at.strftime("%Y/%m/%d %H:%M:%S") %>) </span>
+        </dt>
+        <dd>
+          <%= auto_link( simple_format(c.body).gsub("　"," 　 ") )%>
+        </dd>
+      </dl>
+    </div>
+  <% end %>
+
+  <% if current_user %>
+    <%= form_for([@event,@comment]) do |f| %>
+
+    <div class="comments-form">
+      <dl>
+        <dd class="form">
+          <%= f.text_area :body , :class => "input-textarea", :cols => 40, :rows => 20 %>
+          <p><%= f.submit "コメントを投稿", :class => "btn a-btn radius-5" %></p>
+        </dd>
+      </dl>
+    </div>
+    <% end %>
+  <% end %>
+
+</div>

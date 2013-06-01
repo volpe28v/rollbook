@@ -1,0 +1,64 @@
+<div id="index" class="wrapper">
+<div class="contents clearfix">
+
+<div class="main">
+  <% if params[:action] == "index" %>
+    <h2 class="hl-line">これからの社内イベント一覧 (<%= @events_count %>件)</h2>
+  <% elsif params[:action] == "done" %>
+    <h2 class="hl-line">過去の社内イベント一覧 (<%= @events_count %>件)</h2>
+  <% elsif params[:action] == "entry" %>
+    <h2 class="hl-line">あなたの参加予定イベント一覧 (<%= @events_count %>件)</h2>
+  <% elsif params[:action] == "search" %>
+    <h2 class="hl-line">「<%= @word %>」を含むイベント一覧 (<%= @events_count %>件)</h2>
+  <% end %>
+  <%= render :partial => 'event_summary', :collection => @events %>
+  <%= will_paginate(@events) %>
+</div>
+
+<aside class="side">
+<section id="index-intro">
+<h2>RollBookは社内イベント運営者・参加者のためのサービスです。</h2>
+<ul class="ln clearfix">
+  <li class="left">
+    <%= link_to '新しいイベントを作る', new_event_path, :class => "a-btn btn radius-5" %>
+  </li>
+</ul>
+
+<ul>
+  <li><%= link_to_if params[:action] != "index", "これからのイベント一覧",events_path %></li>
+  <li><%= link_to_if params[:action] != "done" , "過去のイベント一覧",    done_events_path %></li>
+  <li><%= link_to_if params[:action] != "entry", "あなたの参加予定イベント一覧", entry_events_path %></li>
+  <li><%= link_to '登録ユーザ一覧', users_path %></li>
+</ul>
+</section>
+
+<section id="index-search">
+<h2>イベントを検索</h2>
+<div id="search-form">
+<%= form_tag :action => "search" do %>
+  <%= text_field_tag 'keyword' %>
+  <%= submit_tag '検索', :id => "search_keyword" %>
+<% end %>
+
+</div>
+
+</section>
+
+<section id="latest-comment">
+<h2>最近のコメント</h2>
+<dl>
+<% @latest_comments.each do |c| %>
+  <% unless c.event.nil? %>
+    <dt><%= c.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></dt>
+    <dd><%= link_to c.event.title, c.event %> -  <%= c.user.name %></dd>
+  <% end %>
+<% end %>
+</dl>
+</section>
+
+</aside>
+<br />
+
+</div>
+</div>
+

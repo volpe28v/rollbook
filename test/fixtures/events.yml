@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  content: MyText
+  start: 2011-05-22 19:33:40
+  end: 2011-05-22 19:33:40
+  capacity: 1
+  place: MyString
+
+two:
+  title: MyString
+  content: MyText
+  start: 2011-05-22 19:33:40
+  end: 2011-05-22 19:33:40
+  capacity: 1
+  place: MyString

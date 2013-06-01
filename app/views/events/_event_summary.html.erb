@@ -1,0 +1,18 @@
+<div class="list-a">
+  <%= link_to event_summary do %>
+    <dl>
+      <dt><%= event_summary.title %>
+        <ul>
+          <li>場所: <%= event_summary.place %></li>
+          <li>日時: <%= event_summary.start.strftime("%Y年%m月%d日 %H:%M") %> <%= event_summary.end ? "〜 " + event_summary.end.strftime("%Y年%m月%d日 %H:%M") : "" %></li>
+        </ul>
+      </dt>
+      <dd class="count">
+      <p><strong class="red font-face"><%= event_summary.roll_books.entry.count %></strong>/ <%= event_summary.capacity %> 人</p>
+      <% if event_summary.comments.count > 0 %>
+        <p><font color="red" style="font-size: smaller">コメント<%= event_summary.comments.count %>件</font></p>
+      <% end %>
+      </dd>
+    </dl>
+  <% end %>
+</div>

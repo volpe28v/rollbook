@@ -1,0 +1,72 @@
+.signature {
+    text-align: center;
+    font-size: 100%;
+    color: #888;
+}
+
+.user_list table{
+  margin:10px 10px 10px 10px;padding:0px;
+  border-collapse:collapse;
+  border-left:1px solid #999999;
+  border-bottom:1px solid #999999;
+  border-right:1px solid #999999;
+  border-top:1px solid #999999;
+}
+
+.user_list th{
+  padding:4px 2px 2px 4px;
+  text-align:left;vertical-align:top;color:#666666;
+  background-color:#EEEEEE;
+  border-bottom:1px dotted #999999;
+  border-right:1px dotted #999999;
+}
+
+.user_list td{
+  padding:4px 2px 2px 4px;
+  border-bottom:1px dotted #999999;
+  border-right:1px dotted #999999;
+}
+
+
+.field_with_errors input ,.field_with_errors select, .field_with_errors textarea{
+  background: #fcc;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  border-width:0px 0px 0px 0px;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+.list-a dt ul{
+  list-style: none;
+}
+
+.search-keyword-list ul{
+  list-style: none;
+}
+
+.search-keyword-list li{
+  float:left;
+  margin: 5px;
+}

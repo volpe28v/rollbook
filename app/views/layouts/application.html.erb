@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rollbook</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
+  <%= stylesheet_link_tag "reset" %>
+  <%= stylesheet_link_tag "atnd" %>
+  <%= stylesheet_link_tag "rollbook" %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tag %>
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<header class="wrapper clearfix" name="header">
+<h1><%= link_to image_tag('rollbook.png'), events_path %></h1>
+  <div class="header-cap">
+    <h2>社内イベント支援サービス</h2>
+  </div>
+      <% if user_signed_in? %>
+        <p class="header-logged"><span>Logged in as</span><%= link_to current_user.name, current_user %></p>
+        <ul class="header-nav logged">
+          <li><%= link_to '新規イベントを追加', new_event_path %></li>
+          <li><%= link_to "ログアウト", destroy_user_session_path %></li>
+          <li><%= link_to "個人情報変更", edit_user_path(current_user) %></li>
+        </ul>
+      <% else %>
+        <p class="header-logged">Not logged in</p>
+        <ul class="header-nav not_logged">
+          <li><%= link_to "ログイン", new_user_session_path %> or <%= link_to "新規登録", new_user_registration_path %></li>
+        </ul>
+      <% end %>
+</header>
+
+  <%= yield %>
+
+<footer class="wrapper">
+  <div class="signature">
+    <div>Created by Naoki KODAMA. </div>
+    <div>Powered by Ruby on Rails. </div>
+  </div>
+</footer>
+</body>
+</html>

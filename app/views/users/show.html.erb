@@ -1,0 +1,113 @@
+<div id="users" class="wrapper"> 
+ 
+<!-- .title --> 
+<hgroup class="title clearfix"> 
+  <h1><%= @user.name %></h1> 
+  <h3><%= mail_to @user.email %></h3> 
+</hgroup> 
+<!-- //.title --> 
+ 
+<!-- title-btn --> 
+<div class="title-btn"> 
+  
+</div> 
+<!-- //.title-btn--> 
+ 
+<!-- .contetns --> 
+<div class="contents clearfix" id="users-show"> 
+  <!-- .main --> 
+  <div class="main"> 
+
+    <!-- #users-show-event --> 
+    <div id="users-show-event"> 
+      <div class="ui-tabs"> 
+        <nav> 
+        <ul class="ui-tabs-nav ln clearfix"><!--
+          --><li><a href="#manage" class="selected"><span class="red symbol"></span><span>イベント管理数 ...</span><strong class="font-face"><%= @user.admin_events.count %></strong><span>件</span></a></li><!--
+          --><li><a href="#join"><span class="red symbol"></span><span>イベント参加数 ...</span><strong class="font-face"><%= @user.roll_books.entry.count %></strong><span>件</span></a></li><!--
+          --><li class="last"><a href="#cancel"><span class="red symbol"></span><span>キャンセル数 ...</span><strong class="font-face"><%= @user.roll_books.cancel.count %></strong><span>件</span></a></li><!--
+        --></ul> 
+        </nav> 
+        <div id="manage-content" class="ui-tabs-body"> 
+          <h2 class="hl-line"><span class="red symbol"></span>管理しているイベント</h2> 
+          <% if @user.admin_events.count == 0 %>
+            <p class="list-none">管理しているイベントはありません。</p> 
+          <% else %>
+            <table class="list">
+              <% @user.admin_events.sort.each do |a| %>
+                <% ae = a.event %>
+                <% next if ae == nil %> <%# TODO 保険でガードをいれている %>
+                <% if ae.is_done? %>
+                  <tr class="click finish">
+                <% else %>
+                  <tr class="click">
+                <% end %>
+                  <th class="tb-date">
+                    <span class="date"><%= ae.start.strftime("%Y/%2m/%2d") %><br/><%= ae.start.strftime("%2H:%2M") %></span><br/>
+                  </th>
+                  <th class="tb-body"><%= link_to ae.title , ae %></th>
+                  <td class="tb-sub count"><strong class="red font-face"><%= ae.valid_entry_count %></strong>/ <%= ae.capacity %> 人</td>
+                </tr>
+              <% end %>
+
+            </table>
+          <% end %>
+        </div> 
+
+        <div id="join-content" class="ui-tabs-body"> 
+          <h2 class="hl-line"><span class="red symbol"></span>参加しているイベント</h2> 
+          <% if @user.roll_books.entry.count == 0 %>
+            <p class="list-none">参加しているイベントはありません。</p> 
+          <% else %>
+            <table class="list">
+              <% @user.roll_books.entry.sort.each do |rb| %>
+                <% if rb.event.is_done? %>
+                  <tr class="click finish">
+                <% else %>
+                  <tr class="click">
+                <% end %>
+                  <th class="tb-date">
+                    <span class="date"><%= rb.event.start.strftime("%Y/%2m/%2d") %><br/><%= rb.event.start.strftime("%2H:%2M") %></span><br/>
+                  </th>
+                  <th class="tb-body"><%= link_to rb.event.title , rb.event %></th>
+                  <td class="tb-sub count"><strong class="red font-face"><%= rb.event.valid_entry_count %></strong>/ <%= rb.event.capacity %> 人</td>
+                </tr>
+              <% end %>
+            </table>
+          <% end %>
+        </div>
+
+        <div id="cancel-content" class="ui-tabs-body">
+          <h2 class="hl-line"><span class="red symbol"></span>キャンセルしたイベント</h2>
+          <% if @user.roll_books.cancel.count == 0 %>
+            <p class="list-none">キャンセルしたイベントはありません。</p>
+          <% else %>
+            <table class="list">
+              <% @user.roll_books.cancel.sort.each do |rb| %>
+                <% if rb.event.is_done? %>
+                  <tr class="click finish">
+                <% else %>
+                  <tr class="click">
+                <% end %>
+                  <th class="tb-date">
+                    <span class="date"><%= rb.event.start.strftime("%Y/%2m/%2d") %><br/><%= rb.event.start.strftime("%2H:%2M") %></span><br/>
+                  </th>
+                  <th class="tb-body"><%= link_to rb.event.title , rb.event %></th>
+                  <td class="tb-sub count"><strong class="red font-face"><%= rb.event.valid_entry_count %></strong>/ <%= rb.event.capacity %> 人</td>
+                </tr>
+              <% end %>
+            </table>
+          <% end %>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div> 
+<!-- //.contetns --> 
+ 
+</div> 
+<!-- //#users --> 
